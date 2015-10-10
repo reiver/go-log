@@ -8,8 +8,8 @@ import (
 )
 
 
-func NewWritingRouter(writer io.Writer) *WritingRouter {
-	router := WritingRouter{
+func NewPrettyWritingRouter(writer io.Writer) *PrettyWritingRouter {
+	router := PrettyWritingRouter{
 		writer:writer,
 	}
 
@@ -18,13 +18,13 @@ func NewWritingRouter(writer io.Writer) *WritingRouter {
 
 
 
-type WritingRouter struct {
+type PrettyWritingRouter struct {
 	writer io.Writer
 }
 
 
 
-func (router *WritingRouter) Route(message string, context map[string]interface{}) error {
+func (router *PrettyWritingRouter) Route(message string, context map[string]interface{}) error {
 
 	const STYLE_PANIC     = "\x1b[40;31;1m" // BG BLACK, FG RED, BOLD
 	const STYLE_ERROR     = "\x1b[41;33;1m" // BG RED, FG YELLOW, BOLD
