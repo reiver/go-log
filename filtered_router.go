@@ -17,7 +17,7 @@ func NewFilteredRouter(subrouter Router, filterFn func(string, map[string]interf
 }
 
 
-// FilteredRouter is a Router that conditionally routes or discards a message (and its context).
+// FilteredRouter is a Router that conditionally re-routes or discards a message (and its context).
 type FilteredRouter struct {
 	subrouter Router
 	filterFn func(string, map[string]interface{})bool
