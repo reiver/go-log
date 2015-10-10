@@ -25,14 +25,46 @@ type WritingRouter struct {
 
 
 func (router *WritingRouter) Route(message string, context map[string]interface{}) error {
-	const BOLD      = "\033[1m"
-	const HEADER    = "\033[95m"
-	const UNDERLINE = "\033[4m"
-	const ENDC      = "\033[0m"
 
-	str := fmt.Sprintf("%s%s%s\t(%s%v%s)", UNDERLINE, message, ENDC, HEADER, time.Now(), ENDC)
+	const STYLE_PANIC     = "\x1b[40;31;1m" // BG BLACK, FG RED, BOLD
+	const STYLE_ERROR     = "\x1b[41;33;1m" // BG RED, FG YELLOW, BOLD
+	const STYLE_WARNING   = "\x1b[43;37;1m" // BG YELLOW, FG WHITE, BOLD
+	const STYLE_NOTICE    = "\x1b[42;33;1m" // BG GREEN, FG YELLOW, BOLD
+	const STYLE_TIMESTAMP = "\x1b[2m"       // FAINT
+	const STYLE_MESSAGE   = "\x1b[44;37;1m" // BG BLUE, FG WHITE, BOLD
+	const STYLE_DEFAULT   = "\033[95m"      // HEADER
+	const STYLE_RESET     = "\033[0m"       // RESET
+
+	str := ""
+
+	if nil != context {
+		if _, ok := context["panic"]; ok {
+			str = fmt.Sprintf("%s ☠ ☠ ☠ ☠ ☠ %s\t%s", STYLE_PANIC, STYLE_RESET, str)
+		} else if _, ok := context["error"]; ok {
+			str = fmt.Sprintf("%s 😨 😨 😨 😨 😨 %s\t%s", STYLE_ERROR, STYLE_RESET, str)
+		} else if _, ok := context["warning"]; ok {
+			str = fmt.Sprintf("%s 😟 😟 😟 😟 😟 %s\t%s", STYLE_WARNING, STYLE_RESET, str)
+		} else if _, ok := context["notice"]; ok {
+			str = fmt.Sprintf("%s 😮 😮 😮 😮 😮 %s\t%s", STYLE_NOTICE, STYLE_RESET, str)
+		}
+	}
+
+	str = fmt.Sprintf("%s%s%s%s\t(%s%v%s)", str, STYLE_MESSAGE, message, STYLE_RESET, STYLE_TIMESTAMP, time.Now(), STYLE_RESET)
 	for key, value := range context {
-		str = fmt.Sprintf("%s\t%s%s%s=%q", str, HEADER, key, ENDC, value)
+		style := STYLE_DEFAULT
+
+		switch key {
+		case "panic":
+			style = STYLE_PANIC
+		case "error":
+			style = STYLE_ERROR
+		case "warning":
+			style = STYLE_WARNING
+		case "notice":
+			style = STYLE_NOTICE
+		}
+
+		str = fmt.Sprintf("%s\t%s%s%s=%s%#v%s", str, style, key, STYLE_RESET, style, value, STYLE_RESET)
 	}
 
 	fmt.Fprintln(router.writer, str)
