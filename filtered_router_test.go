@@ -12,8 +12,7 @@ import (
 
 func TestFilteredRouterJustCreated(t *testing.T) {
 
-	router := NewFilteredRouter()
-	router.Register(NewDiscardRouter(), func(string, map[string]interface{}) bool {
+	router := NewFilteredRouter(NewDiscardRouter(), func(string, map[string]interface{}) bool {
 		return false
 	})
 	if nil == router {
@@ -32,9 +31,7 @@ func TestFilteredRouterJustFilterParameters(t *testing.T) {
 	var filterContext map[string] interface{}
 	var filterResult = false
 
-	router := NewFilteredRouter()
-
-	router.Register(NewDiscardRouter(), func(message string, context map[string]interface{}) bool {
+	router := NewFilteredRouter(NewDiscardRouter(), func(message string, context map[string]interface{}) bool {
 		filterMessage = message
 		filterContext = context
 
@@ -78,5 +75,4 @@ TLoop:	for testNumber:=0; testNumber<NUM_TESTS; testNumber++ {
 			}
 		}
 	}
-
 }

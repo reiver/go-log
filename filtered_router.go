@@ -1,11 +1,10 @@
 package flog
 
 
-func NewFilteredRouter() *FilteredRouter {
-	registry := make([]struct{FilterFn func(string, map[string]interface{})bool ; Subrouter Router}, 0, 2)
-
+func NewFilteredRouter(subrouter Router, filterFn func(string, map[string]interface{})bool) *FilteredRouter {
 	router := FilteredRouter{
-		registry:registry,
+		subrouter:subrouter,
+		filterFn:filterFn,
 	}
 
 	return &router
@@ -13,26 +12,15 @@ func NewFilteredRouter() *FilteredRouter {
 
 
 type FilteredRouter struct {
-	registry []struct{FilterFn func(string, map[string]interface{})bool ; Subrouter Router}
+	subrouter Router
+	filterFn func(string, map[string]interface{})bool
 }
 
 
 func (router *FilteredRouter) Route(message string, context map[string]interface{}) error {
-	for _, datum := range router.registry {
-		if datum.FilterFn(message, context) {
-			return datum.Subrouter.Route(message, context)
-		}
+	if router.filterFn(message, context) {
+		return router.subrouter.Route(message, context)
 	}
 
 	return nil
-}
-
-
-func (router *FilteredRouter) Register(subrouter Router, filterFn func(string, map[string]interface{})bool) {
-	datum := struct{FilterFn func(string, map[string]interface{})bool ; Subrouter Router}{
-		FilterFn: filterFn,
-		Subrouter: subrouter,
-	}
-
-	router.registry = append(router.registry, datum)
 }
