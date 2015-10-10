@@ -10,16 +10,16 @@ import (
 )
 
 
-func TestFilteredRouterJustCreated(t *testing.T) {
+func TestFilteringRouterJustCreated(t *testing.T) {
 
 	randomness := rand.New(rand.NewSource( time.Now().UTC().UnixNano() ))
 
 
-	router := NewFilteredRouter(NewDiscardRouter(), func(string, map[string]interface{}) bool {
+	router := NewFilteringRouter(NewDiscardRouter(), func(string, map[string]interface{}) bool {
 		return false
 	})
 	if nil == router {
-		t.Errorf("After trying to create a filtered router, expected it to be not nil, but was: %v", router)
+		t.Errorf("After trying to create a filtering router, expected it to be not nil, but was: %v", router)
 	}
 
 
@@ -35,7 +35,7 @@ func TestFilteredRouterJustCreated(t *testing.T) {
 }
 
 
-func TestFilteredRouterJustFilterParameters(t *testing.T) {
+func TestFilteringRouterJustFilterParameters(t *testing.T) {
 
 	randomness := rand.New(rand.NewSource( time.Now().UTC().UnixNano() ))
 
@@ -44,7 +44,7 @@ func TestFilteredRouterJustFilterParameters(t *testing.T) {
 	var filterContext map[string] interface{}
 	var filterResult = false
 
-	router := NewFilteredRouter(NewDiscardRouter(), func(message string, context map[string]interface{}) bool {
+	router := NewFilteringRouter(NewDiscardRouter(), func(message string, context map[string]interface{}) bool {
 		filterMessage = message
 		filterContext = context
 

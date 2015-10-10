@@ -1,9 +1,9 @@
 package flog
 
 
-// NewFilteredRouter returns an initialized FilteredRouter.
+// NewFilteringRouter returns an initialized FilteringRouter.
 //
-// 'subrouter' is the sub-router that a FilteredRouter will
+// 'subrouter' is the sub-router that a FilteringRouter will
 // re-Route a 'message' (and 'context') to, but only on the
 // condition that 'filterFn' returns 'true' for the 'message'
 // and 'context' passed to it.
@@ -56,8 +56,8 @@ package flog
 //		return true
 //	}
 //
-func NewFilteredRouter(subrouter Router, filterFn func(string, map[string]interface{})bool) *FilteredRouter {
-	router := FilteredRouter{
+func NewFilteringRouter(subrouter Router, filterFn func(string, map[string]interface{})bool) *FilteringRouter {
+	router := FilteringRouter{
 		subrouter:subrouter,
 		filterFn:filterFn,
 	}
@@ -66,14 +66,14 @@ func NewFilteredRouter(subrouter Router, filterFn func(string, map[string]interf
 }
 
 
-// FilteredRouter is a Router that conditionally re-routes or discards a message (and its context).
-type FilteredRouter struct {
+// FilteringRouter is a Router that conditionally re-routes or discards a message (and its context).
+type FilteringRouter struct {
 	subrouter Router
 	filterFn func(string, map[string]interface{})bool
 }
 
 
-func (router *FilteredRouter) Route(message string, context map[string]interface{}) error {
+func (router *FilteringRouter) Route(message string, context map[string]interface{}) error {
 	if router.filterFn(message, context) {
 		return router.subrouter.Route(message, context)
 	}
