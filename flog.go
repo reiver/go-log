@@ -9,6 +9,7 @@ type internalFlogger struct {
 }
 
 
+// New returns an initialized Flogger.
 func New(router Router, cascade ...interface{}) Flogger {
 //@TODO: Do we really want this here?
 //	logs    := make([]string, 0, 8)
