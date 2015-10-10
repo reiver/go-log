@@ -8,6 +8,7 @@ import (
 )
 
 
+// PrettyWritingRouter returns an initialized PrettyWritingRouter
 func NewPrettyWritingRouter(writer io.Writer) *PrettyWritingRouter {
 	router := PrettyWritingRouter{
 		writer:writer,
@@ -18,6 +19,13 @@ func NewPrettyWritingRouter(writer io.Writer) *PrettyWritingRouter {
 
 
 
+// PrettyWritingRouter is a router that writes a pretty version of
+// the log it was give (including COLORS!) to the writer it was
+// given when it was created.
+//
+// A PrettyWritingRouter is appropriate for a deployment (i.e., "DEV")
+// deployment enviornment. (And  probably not appropriate a production
+// (i.e., "PROD") deployment environment.)
 type PrettyWritingRouter struct {
 	writer io.Writer
 }
