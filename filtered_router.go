@@ -20,8 +20,26 @@ package flog
 //		}
 //	}
 //
-// This func will make it so only re-route messages whose context #1 has the key "error"
-// and #2 the value of the context at key "key" fits the builtin Go 'error' interface.
+// This func will cause the router it only re-route messages whose context #1 has the
+// key "error" and #2 where the value of the context at key "key" fits the builtin Go
+// 'error' interface.
+//
+// So, for example, for 'filterError' this would pass:
+//
+//	context := map[string]interface{}{
+//		"apple":1,
+//		"banana":2,
+//		"cherry":3,
+//		"error": errors.New("Something bad happened :-("),
+//	}
+//
+// But, again for 'filterError', this would NOT pass:
+//
+//	context := map[string]interface{}{
+//		"apple":1,
+//		"banana":2,
+//		"cherry":3,
+//	}
 //
 // Also, a rather useless example, but a 'filterFn' that would reject all messages (and
 // contexts) is:
