@@ -15,7 +15,7 @@ func TestFilteringRouterJustCreated(t *testing.T) {
 	randomness := rand.New(rand.NewSource( time.Now().UTC().UnixNano() ))
 
 
-	router := NewFilteringRouter(NewDiscardRouter(), func(string, map[string]interface{}) bool {
+	router := NewFilteringRouter(NewDiscardingRouter(), func(string, map[string]interface{}) bool {
 		return false
 	})
 	if nil == router {
@@ -44,7 +44,7 @@ func TestFilteringRouterJustFilterParameters(t *testing.T) {
 	var filterContext map[string] interface{}
 	var filterResult = false
 
-	router := NewFilteringRouter(NewDiscardRouter(), func(message string, context map[string]interface{}) bool {
+	router := NewFilteringRouter(NewDiscardingRouter(), func(message string, context map[string]interface{}) bool {
 		filterMessage = message
 		filterContext = context
 

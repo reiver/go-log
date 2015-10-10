@@ -8,7 +8,7 @@ import (
 
 func TestNew(t *testing.T) {
 
-	flogger := New(NewDiscardRouter())
+	flogger := New(NewDiscardingRouter())
 	if nil == flogger {
 		t.Errorf("Expected created flogger to not be nil, but was: %v", flogger)
 	}
@@ -155,7 +155,7 @@ func TestNewForContext(t *testing.T) {
 TestLoop:
 	for testNumber, test := range tests {
 
-		flogger := New(NewDiscardRouter(), test.Cascade...)
+		flogger := New(NewDiscardingRouter(), test.Cascade...)
 
 		context := flogger.(*internalFlogger).context
 

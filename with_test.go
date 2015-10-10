@@ -303,7 +303,7 @@ func TestWith(t *testing.T) {
 TestLoop:
 	for testNumber, test := range tests {
 
-		flogger1 := New(NewDiscardRouter(), test.Cascade1...)
+		flogger1 := New(NewDiscardingRouter(), test.Cascade1...)
 
 		flogger2 := flogger1.With(test.Cascade2...)
 

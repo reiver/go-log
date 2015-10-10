@@ -10,12 +10,12 @@ import (
 )
 
 
-func TestNewDiscardRouter(t *testing.T) {
+func TestNewDiscardingRouter(t *testing.T) {
 
 	randomness := rand.New(rand.NewSource( time.Now().UTC().UnixNano() ))
 
 
-	router := NewDiscardRouter()
+	router := NewDiscardingRouter()
 	if nil == router {
 		t.Errorf("After trying to create a discard router, expected it to be not nil, but was: %v", router)
 	}

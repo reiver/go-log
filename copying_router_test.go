@@ -15,7 +15,7 @@ func TestNewCopyingRouter(t *testing.T) {
 	randomness := rand.New(rand.NewSource( time.Now().UTC().UnixNano() ))
 
 
-	router := NewCopyingRouter(NewDiscardRouter())
+	router := NewCopyingRouter(NewDiscardingRouter())
 	if nil == router {
 		t.Errorf("After trying to create a copying router, expected it to be not nil, but was: %v", router)
 	}
@@ -94,7 +94,7 @@ func TestCopyingRouterRoute(t *testing.T) {
 
 TLoop:	for testNumber, test := range tests {
 
-		router := NewCopyingRouter(NewDiscardRouter())
+		router := NewCopyingRouter(NewDiscardingRouter())
 
 		for _, datum := range test.Data {
 			router.Route(datum.Message, datum.Context)
