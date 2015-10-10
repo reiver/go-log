@@ -1,10 +1,12 @@
 package flog
 
 
-func NewDiscardRouter() *DiscardRouter {
-	router := DiscardRouter{}
+var (
+	singltonDiscardRouter = DiscardRouter{}
+)
 
-	return &router
+func NewDiscardRouter() *DiscardRouter {
+	return &singltonDiscardRouter
 }
 
 
