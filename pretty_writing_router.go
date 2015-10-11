@@ -4,6 +4,7 @@ package flog
 import (
 	"fmt"
 	"io"
+	"sort"
 	"time"
 )
 
@@ -58,17 +59,32 @@ func (router *PrettyWritingRouter) Route(message string, context map[string]inte
 	}
 
 	str = fmt.Sprintf("%s%s%s%s\t(%s%v%s)", str, STYLE_MESSAGE, message, STYLE_RESET, STYLE_TIMESTAMP, time.Now(), STYLE_RESET)
-	for key, value := range context {
+
+//@TODO: This is a potential heavy operation. Is there a better way
+//       to get the ultimate result this is trying to archive?
+//
+	sortedKeys := make([]string, len(context))
+	i := 0
+	for key, _ := range context {
+		sortedKeys[i] = key
+		i++
+	}
+	sort.Strings(sortedKeys)
+
+	for _, key := range sortedKeys {
+
+		value := context[key]
+
 		style := STYLE_DEFAULT
 
 		switch key {
-		case "panic":
+		case "panic", "panics":
 			style = STYLE_PANIC
-		case "error":
+		case "error", "errors":
 			style = STYLE_ERROR
-		case "warning":
+		case "warning", "warnings":
 			style = STYLE_WARNING
-		case "notice":
+		case "notice", "notices":
 			style = STYLE_NOTICE
 		}
 
