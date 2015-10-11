@@ -23,6 +23,40 @@ Once you have the flogger, you can do things such as:
 	flogger.Fatalln("Something really bad happened!")
 	flogger.Fatalf("Something really bad happened: %s.", problemDescription)
 
+BTW, if the PrettyWritingRouter was being used, then this:
+
+	flogger.Print("Hello world!")
+
+Would generate output like the following:
+
+	Hello world!	(2015-10-10 17:28:49.397356044 -0700 PDT)
+
+(Alrhough note that in actual usage this would have color.)
+
+(Note that for for other routers the actual output would look very different!
+What the output looks like is router dependent.)
+
+Structured Logging
+
+But those method calls all generated unstructure data.
+
+To include structured data the flogger's With method needs to be used.
+For example:
+
+	newFlogger := flogger.With(map[string]interface{}{
+		"method":"Toil",
+		"secret_note":"Hi there! How are you?",
+	})
+
+Then if the PrettyWritingRouter was being used, then this:
+
+	newFlogger.Print("Hello world!")
+
+Would generate output like the following:
+
+	Hello world!	(2015-10-10 17:28:49.397356044 -0700 PDT)	method="Toil"	secret_note="Hi there! How are you?"
+
+(Again, note that in actual usage this would have color.)
 
 Deployment Environment
 
