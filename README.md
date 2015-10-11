@@ -15,4 +15,4 @@ Online documentation, which includes examples, can be found at: http://godoc.org
 In addition to the builtin routers that go-flog comes with, other external
 routers are also available. These include:
 
-* [go-slackchannelrouter](https://github.com/reiver/go-slackchannelrouter) Makes it so log messages get posted to a Slack channel.
+* [go-slackchannelrouter](https://github.com/reiver/go-slackchannelrouter) Makes it so log messages get posted to a [Slack](https://slack.com/) channel.
