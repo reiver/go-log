@@ -91,6 +91,14 @@ For example:
 		flogger = flog.New(router)
 	}
 
+More Routers
+
+In addition to the builtin routers that go-flog comes with, other external
+routers are also available. These include:
+
+go-slackchannelrouter:
+Makes it so log messages get posted to a Slack channel.
+https://github.com/reiver/go-slackchannelrouter
 
 */
 package flog
