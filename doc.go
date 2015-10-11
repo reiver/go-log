@@ -31,7 +31,7 @@ Would generate output like the following:
 
 	Hello world!	(2015-10-10 17:28:49.397356044 -0700 PDT)
 
-(Alrhough note that in actual usage this would have color.)
+(Although note that in actual usage this would have color.)
 
 (Note that for for other routers the actual output would look very different!
 What the output looks like is router dependent.)
