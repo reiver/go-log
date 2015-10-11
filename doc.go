@@ -63,6 +63,10 @@ Deployment Environment
 Of course in a real application system you should (probably) create a different kind
 of flogger for each deployment environment.
 
+Even though the PrettyWritingRouter is great for a development deployment environment
+(i.e., "DEV") it is probably not appropriate for a production deployment environment
+(i.e., "PROD").
+
 For example:
 
 	var flogger flog.Flogger
