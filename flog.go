@@ -18,3 +18,12 @@ func New(router Router, cascade ...interface{}) Flogger {
 
 	return &flogger
 }
+
+
+
+func (flogger *internalFlogger) route(message string, moreContext map[string]interface{}) error {
+
+	context := newContext(flogger.context, moreContext)
+
+	return flogger.router.Route(message, context)
+}

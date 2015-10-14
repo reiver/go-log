@@ -2,24 +2,38 @@ package flog
 
 
 import (
+	"fmt"
 	"os"
+)
+
+
+var (
+	fatalContext = map[string]interface{}{
+		"~type":"fatal",
+	}
 )
 
 
 func (flogger *internalFlogger) Fatal(v ...interface{}) {
 
-	flogger.Print(v...)
+	msg := fmt.Sprint(v...)
+
+	flogger.route(msg, fatalContext)
 	os.Exit(1)
 }
 
 func (flogger *internalFlogger) Fatalf(format string, v ...interface{}) {
 
-	flogger.Printf(format, v...)
+	msg := fmt.Sprintf(format, v...)
+
+	flogger.route(msg, fatalContext)
 	os.Exit(1)
 }
 
 func (flogger *internalFlogger) Fatalln(v ...interface{}) {
 
-	flogger.Println(v...)
+	msg := fmt.Sprintln(v...)
+
+	flogger.route(msg, fatalContext)
 	os.Exit(1)
 }

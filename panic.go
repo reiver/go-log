@@ -6,20 +6,41 @@ import (
 )
 
 
+var (
+	panicContext = map[string]interface{}{
+		"~type":"panic",
+	}
+)
+
+
 func (flogger *internalFlogger) Panic(v ...interface{}) {
 
-	flogger.Print(v...)
-	panic(fmt.Sprint(v...))
+	msg := fmt.Sprint(v...)
+
+	flogger.route(msg, panicContext)
+	panic(msg)
 }
 
 func (flogger *internalFlogger) Panicf(format string, v ...interface{}) {
 
-	flogger.Printf(format, v...)
-	panic(fmt.Sprintf(format, v...))
+	msg := fmt.Sprintf(format, v...)
+
+	flogger.route(msg, panicContext)
+	panic(msg)
+}
+
+func (flogger *internalFlogger) Panicfv(panicValue interface{}, format string, v ...interface{}) {
+
+	msg := fmt.Sprintf(format, v...)
+
+	flogger.route(msg, panicContext)
+	panic(panicValue)
 }
 
 func (flogger *internalFlogger) Panicln(v ...interface{}) {
 
-	flogger.Println(v...)
-	panic(fmt.Sprintln(v...))
+	msg := fmt.Sprintln(v...)
+
+	flogger.route(msg, panicContext)
+	panic(msg)
 }
