@@ -36,6 +36,7 @@ func (flogger *internalFlogger) Errorfe(err error, format string, v ...interface
 		context[k] = v
 	}
 	context["~error"] = err
+	context["~errortxt"] = err.Error()
 
 	flogger.route(msg, context)
 }
