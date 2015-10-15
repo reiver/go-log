@@ -35,30 +35,42 @@ type PrettyWritingRouter struct {
 
 func (router *PrettyWritingRouter) Route(message string, context map[string]interface{}) error {
 
-	const STYLE_PANIC     = "\x1b[40;31;1m" // BG BLACK, FG RED, BOLD
-	const STYLE_ERROR     = "\x1b[41;33;1m" // BG RED, FG YELLOW, BOLD
-	const STYLE_WARNING   = "\x1b[43;37;1m" // BG YELLOW, FG WHITE, BOLD
-	const STYLE_NOTICE    = "\x1b[42;33;1m" // BG GREEN, FG YELLOW, BOLD
+	const STYLE_FATAL     = "\x1b[40;33;1m" // BG BLACK,  FG YELLOW, BOLD
+	const STYLE_PANIC     = "\x1b[40;31;1m" // BG BLACK,  FG RED,    BOLD
+	const STYLE_ERROR     = "\x1b[41;37;1m" // BG RED,    FG WHITE,  BOLD
+	const STYLE_WARNING   = "\x1b[43;37;1m" // BG YELLOW, FG WHITE,  BOLD
+	const STYLE_NOTICE    = "\x1b[42;33;1m" // BG GREEN,  FG YELLOW, BOLD
 	const STYLE_TIMESTAMP = "\x1b[2m"       // FAINT
-	const STYLE_MESSAGE   = "\x1b[44;37;1m" // BG BLUE, FG WHITE, BOLD
+	const STYLE_MESSAGE   = "\x1b[44;37;1m" // BG BLUE,   FG WHITE,  BOLD
 	const STYLE_DEFAULT   = "\033[95m"      // HEADER
 	const STYLE_RESET     = "\033[0m"       // RESET
 
 	str := ""
 
 	if nil != context {
-		if _, ok := context["panic"]; ok {
+		if _, ok := context["~fatal"]; ok {
+			str = fmt.Sprintf("%s 💀 💀 💀 💀 💀 %s\t%s", STYLE_FATAL, STYLE_RESET, str)
+		} else if _, ok := context["~panic"]; ok {
 			str = fmt.Sprintf("%s ☠ ☠ ☠ ☠ ☠ %s\t%s", STYLE_PANIC, STYLE_RESET, str)
-		} else if _, ok := context["error"]; ok {
+		} else if _, ok := context["~error"]; ok {
 			str = fmt.Sprintf("%s 😨 😨 😨 😨 😨 %s\t%s", STYLE_ERROR, STYLE_RESET, str)
-		} else if _, ok := context["warning"]; ok {
+		} else if _, ok := context["~warn"]; ok {
 			str = fmt.Sprintf("%s 😟 😟 😟 😟 😟 %s\t%s", STYLE_WARNING, STYLE_RESET, str)
-		} else if _, ok := context["notice"]; ok {
+		} else if _, ok := context["~print"]; ok {
 			str = fmt.Sprintf("%s 😮 😮 😮 😮 😮 %s\t%s", STYLE_NOTICE, STYLE_RESET, str)
 		}
 	}
 
 	str = fmt.Sprintf("%s%s%s%s\t(%s%v%s)", str, STYLE_MESSAGE, message, STYLE_RESET, STYLE_TIMESTAMP, time.Now(), STYLE_RESET)
+
+	// If we have an error, then get the error.Error() into the log too.
+	if errorFieldValue, ok := context["~error"]; ok {
+		if err, ok := errorFieldValue.(error); ok {
+			context["~~error"] = err.Error()
+			context["~~errorType"] = fmt.Sprintf("%T", err)
+		}
+	}
+
 
 //@TODO: This is a potential heavy operation. Is there a better way
 //       to get the ultimate result this is trying to archive?
@@ -78,13 +90,15 @@ func (router *PrettyWritingRouter) Route(message string, context map[string]inte
 		style := STYLE_DEFAULT
 
 		switch key {
-		case "panic", "panics":
+                case "~fatal", "~fatals":
+                        style = STYLE_FATAL
+		case "~panic", "~panics":
 			style = STYLE_PANIC
-		case "error", "errors":
+		case "~error", "~errors", "~~error", "~~errorType":
 			style = STYLE_ERROR
-		case "warning", "warnings":
+		case "~warning", "~warnings":
 			style = STYLE_WARNING
-		case "notice", "notices":
+		case "~print", "~prints":
 			style = STYLE_NOTICE
 		}
 
