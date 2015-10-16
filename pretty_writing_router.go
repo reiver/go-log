@@ -66,8 +66,7 @@ func (router *PrettyWritingRouter) Route(message string, context map[string]inte
 	// If we have an error, then get the error.Error() into the log too.
 	if errorFieldValue, ok := context["~error"]; ok {
 		if err, ok := errorFieldValue.(error); ok {
-			context["~~error"] = err.Error()
-			context["~~errorType"] = fmt.Sprintf("%T", err)
+			context["~~error"] = fmt.Sprintf("%s, {{%T}}", err.Error(), err)
 		}
 	}
 
@@ -94,7 +93,7 @@ func (router *PrettyWritingRouter) Route(message string, context map[string]inte
                         style = STYLE_FATAL
 		case "~panic", "~panics":
 			style = STYLE_PANIC
-		case "~error", "~errors", "~~error", "~~errorType":
+		case "~error", "~errors", "~~error":
 			style = STYLE_ERROR
 		case "~warning", "~warnings":
 			style = STYLE_WARNING
