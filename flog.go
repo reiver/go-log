@@ -22,6 +22,9 @@ func New(router Router, cascade ...interface{}) Flogger {
 
 
 func (flogger *internalFlogger) route(message string, moreContext map[string]interface{}) error {
+	if nil == flogger {
+		return errNilReceiver
+	}
 
 	context := newContext(flogger.context, moreContext)
 
