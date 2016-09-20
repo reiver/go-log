@@ -24,7 +24,7 @@ func NewPrettyWritingRouter(writer io.Writer) *PrettyWritingRouter {
 // the log it was give (including COLORS!) to the writer it was
 // given when it was created.
 //
-// A PrettyWritingRouter is appropriate for a deployment (i.e., "DEV")
+// A PrettyWritingRouter is appropriate for a development (i.e., "DEV")
 // deployment enviornment. (And  probably not appropriate a production
 // (i.e., "PROD") deployment environment.)
 type PrettyWritingRouter struct {
