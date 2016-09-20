@@ -74,6 +74,10 @@ type FilteringRouter struct {
 
 
 func (router *FilteringRouter) Route(message string, context map[string]interface{}) error {
+	if nil == router {
+		return errNilReceiver
+	}
+
 	if router.filterFn(message, context) {
 		return router.subrouter.Route(message, context)
 	}

@@ -27,6 +27,10 @@ type CopyingRouter struct {
 
 
 func (router *CopyingRouter) Route(message string, context map[string]interface{}) error {
+	if nil == router {
+		return errNilReceiver
+	}
+
 	copy := struct{Message string ; Context map[string]interface{}}{
 		Message: message,
 		Context: context,

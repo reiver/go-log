@@ -24,6 +24,10 @@ type FanoutRouter struct {
 
 
 func (router *FanoutRouter) Route(message string, context map[string]interface{}) error {
+	if nil == router {
+		return errNilReceiver
+	}
+
 	errors := []error{}
 
 	for _, subrouter := range router.subrouters {

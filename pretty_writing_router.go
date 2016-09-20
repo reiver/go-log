@@ -34,6 +34,9 @@ type PrettyWritingRouter struct {
 
 
 func (router *PrettyWritingRouter) Route(message string, context map[string]interface{}) error {
+	if nil == router {
+		return errNilReceiver
+	}
 
 	const STYLE_FATAL     = "\x1b[40;33;1m" // BG BLACK,  FG YELLOW, BOLD
 	const STYLE_PANIC     = "\x1b[40;31;1m" // BG BLACK,  FG RED,    BOLD

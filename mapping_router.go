@@ -24,5 +24,9 @@ type MappingRouter struct {
 
 
 func (router *MappingRouter) Route(message string, context map[string]interface{}) error {
+	if nil == router {
+		return errNilReceiver
+	}
+
 	return router.subrouter.Route(router.fn(message, context))
 }

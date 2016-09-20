@@ -22,6 +22,10 @@ type NonBlockingRouter struct {
 
 
 func (router *NonBlockingRouter) Route(message string, context map[string]interface{}) error {
+	if nil == router {
+		return errNilReceiver
+	}
+
 	go func() {
 		router.subrouter.Route(message, context)
 	}()
