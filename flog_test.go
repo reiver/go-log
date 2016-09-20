@@ -177,3 +177,108 @@ TestLoop:
 		}
 	}
 }
+
+
+func TestInternalFloggerRouteNilReceiver(t *testing.T) {
+
+	tests := []struct{
+		Message string
+		MoreContext map[string]interface{}
+	}{
+		{
+			Message: "",
+			MoreContext: nil,
+		},
+		{
+			Message: "",
+			MoreContext: map[string]interface{}{},
+		},
+		{
+			Message: "",
+			MoreContext: map[string]interface{}{
+				"apple":  "one",
+				"banana": 2,
+				"cherry": '3',
+				"kiwi":   4.0,
+			},
+		},
+
+
+
+		{
+			Message: "Hello world!",
+			MoreContext: nil,
+		},
+		{
+			Message: "Hello world!",
+			MoreContext: map[string]interface{}{},
+		},
+		{
+			Message: "Hello world!",
+			MoreContext: map[string]interface{}{
+				"apple":  "one",
+				"banana": 2,
+				"cherry": '3',
+				"kiwi":   4.0,
+			},
+		},
+
+
+
+		{
+			Message: " ",
+			MoreContext: nil,
+		},
+		{
+			Message: " ",
+			MoreContext: map[string]interface{}{},
+		},
+		{
+			Message: " ",
+			MoreContext: map[string]interface{}{
+				"apple":  "one",
+				"banana": 2,
+				"cherry": '3',
+				"kiwi":   4.0,
+			},
+		},
+
+
+
+		{
+			Message: "one\ntwo\tthree\r\n",
+			MoreContext: nil,
+		},
+		{
+			Message: "one\ntwo\tthree\r\n",
+			MoreContext: map[string]interface{}{},
+		},
+		{
+			Message: "one\ntwo\tthree\r\n",
+			MoreContext: map[string]interface{}{
+				"apple":  "one",
+				"banana": 2,
+				"cherry": '3',
+				"kiwi":   4.0,
+			},
+		},
+	}
+
+
+
+	for testNumber, test := range tests {
+
+		var flogger *internalFlogger = nil
+
+		err := flogger.route(test.Message, test.MoreContext)
+		if nil == err {
+			t.Errorf("For test #%d, expected an error, but did not actually get one: %v", testNumber, err)
+			continue
+		}
+		if expected, actual := errNilReceiver, err; expected != actual {
+			t.Errorf("For test #%d, expected an error (%T) %q, but actually got (%T) %q", testNumber, expected, expected, actual, actual)
+			continue
+		}
+
+	}
+}
