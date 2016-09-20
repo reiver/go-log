@@ -282,3 +282,71 @@ func TestInternalFloggerRouteNilReceiver(t *testing.T) {
 
 	}
 }
+
+
+func TestInternalFloggerRouteNilRouter(t *testing.T) {
+
+	moreContexts := []map[string]interface{}{
+		nil,
+		map[string]interface{}{},
+		map[string]interface{}{
+			"apple":  "one",
+			"banana": 2,
+			"cherry": '3',
+			"kiwi":   4.0,
+		},
+	}
+
+
+	messages := []string{
+		"",
+		"Hello world!",
+		" ",
+		"one\ntwo\tthree\r\n",
+	}
+
+
+	tests := []struct{
+		Context map[string]interface{}
+	}{
+		{
+			Context: nil,
+		},
+		{
+			Context: map[string]interface{}{},
+		},
+
+
+
+		{
+			Context: map[string]interface{}{
+				"apple":  "one",
+				"banana": 2,
+				"cherry": '3',
+				"kiwi":   4.0,
+			},
+		},
+	}
+
+
+	for testNumber, test := range tests {
+		var flogger internalFlogger
+
+		flogger.context = test.Context
+		flogger.router  = nil
+
+		for messageNumber, message := range messages {
+			for moreContextNumber, moreContext := range moreContexts {
+				err := flogger.route(message, moreContext)
+				if nil == err {
+					t.Errorf("For test #%d and message #%d and more context #%d, expected an error, but did not actually get one: %v", testNumber, messageNumber, moreContextNumber, err)
+					continue
+				}
+				if expected, actual := errNilRouter, err; expected != actual {
+					t.Errorf("For test #%d and message #%d and more context #%d, expected an error (%T) %q, but actually got (%T) %q", testNumber, messageNumber, moreContextNumber, expected, expected, actual, actual)
+					continue
+				}
+			}
+		}
+	}
+}
