@@ -28,5 +28,10 @@ func (flogger *internalFlogger) route(message string, moreContext map[string]int
 
 	context := newContext(flogger.context, moreContext)
 
-	return flogger.router.Route(message, context)
+	router := flogger.router
+	if nil == router {
+		return errNilRouter
+	}
+
+	return router.Route(message, context)
 }

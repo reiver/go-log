@@ -8,4 +8,5 @@ import (
 
 var (
 	errNilReceiver = errors.New("Nil Receiver")
+	errNilRouter   = errors.New("Nil Router")
 )
