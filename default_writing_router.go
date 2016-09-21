@@ -12,10 +12,45 @@ import (
 )
 
 
-// DefaultWritingRouter returns an initialized DefaultWritingRouter
+// NewDefaultWritingRouter returns an initialized DefaultWritingRouter
 func NewDefaultWritingRouter(writer io.Writer) *DefaultWritingRouter {
+	return NewDefaultWritingRouterWithPrefix(writer, nil)
+}
+
+// NewDefaultWritingRouterWithPrefix returns an initialized DefaultWritingRouter
+func NewDefaultWritingRouterWithPrefix(writer io.Writer, prefix map[string]interface{}) *DefaultWritingRouter {
+	var prefixBuffer []byte
+	if 0 < len(prefix) {
+//@TODO: This is a potential heavy operation. Is there a better way
+//       to get the ultimate result this is trying to archive?
+//
+		sortedKeys := make([]string, len(prefix))
+		i := 0
+		for key, _ := range prefix {
+			sortedKeys[i] = key
+			i++
+		}
+		sort.Strings(sortedKeys)
+
+		for _, key := range sortedKeys {
+
+			value := prefix[key]
+
+			if s, ok := value.(string); !ok {
+				prefixBuffer = dotquote.AppendString(prefixBuffer, fmt.Sprintf("%T", value), key, "type")
+				prefixBuffer = append(prefixBuffer, ' ')
+				prefixBuffer = dotquote.AppendString(prefixBuffer, fmt.Sprintf("%v", value), key, "value")
+				prefixBuffer = append(prefixBuffer, ' ')
+			} else {
+				prefixBuffer = dotquote.AppendString(prefixBuffer, s, key)
+				prefixBuffer = append(prefixBuffer, ' ')
+			}
+		}
+	}
+
 	router := DefaultWritingRouter{
 		writer:writer,
+		prefix:prefixBuffer,
 	}
 
 	return &router
@@ -28,6 +63,7 @@ func NewDefaultWritingRouter(writer io.Writer) *DefaultWritingRouter {
 // deployment enviornment.
 type DefaultWritingRouter struct {
 	writer io.Writer
+	prefix []byte
 }
 
 
@@ -47,6 +83,10 @@ func (router *DefaultWritingRouter) Route(message string, context map[string]int
 
 	var buffer [512]byte
 	p := buffer[:0]
+
+	if prefix := router.prefix; 0 < len(prefix) {
+		p = append(p, prefix...)
+	}
 
 
 	p = dotquote.AppendString(p, message, "text")
