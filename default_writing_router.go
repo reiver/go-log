@@ -1,0 +1,92 @@
+package flog
+
+
+import (
+	"github.com/reiver/go-dotquote"
+	"github.com/reiver/go-oi"
+
+	"fmt"
+	"io"
+	"sort"
+	"time"
+)
+
+
+// DefaultWritingRouter returns an initialized DefaultWritingRouter
+func NewDefaultWritingRouter(writer io.Writer) *DefaultWritingRouter {
+	router := DefaultWritingRouter{
+		writer:writer,
+	}
+
+	return &router
+}
+
+
+// DefaultWritingRouter is a router that writes the log in a default format.
+//
+// A DefaultWritingRouter is appropriate for a production (i.e., "PROD")
+// deployment enviornment.
+type DefaultWritingRouter struct {
+	writer io.Writer
+}
+
+
+
+func (router *DefaultWritingRouter) Route(message string, context map[string]interface{}) error {
+	if nil == router {
+		return errNilReceiver
+	}
+
+
+	writer := router.writer
+	if nil == writer {
+		// Nothing to do, so just return silently.
+		return nil
+	}
+
+
+	var buffer [512]byte
+	p := buffer[:0]
+
+
+	p = dotquote.AppendString(p, message, "text")
+	p = append(p, ' ')
+	p = dotquote.AppendString(p, time.Now().String(), "when")
+
+	// If we have an error, then get the error.Error() into the log too.
+	if errorFieldValue, ok := context["~error"]; ok {
+		if err, ok := errorFieldValue.(error); ok {
+			p = append(p, ' ')
+			p = dotquote.AppendString(p, fmt.Sprintf("%T", err), "error", "type")
+			p = append(p, ' ')
+			p = dotquote.AppendString(p, err.Error(), "error", "text")
+		}
+	}
+
+
+//@TODO: This is a potential heavy operation. Is there a better way
+//       to get the ultimate result this is trying to archive?
+//
+	sortedKeys := make([]string, len(context))
+	i := 0
+	for key, _ := range context {
+		sortedKeys[i] = key
+		i++
+	}
+	sort.Strings(sortedKeys)
+
+	for _, key := range sortedKeys {
+
+		value := context[key]
+
+		p = append(p, ' ')
+		p = dotquote.AppendString(p, fmt.Sprintf("%T", value), "ctx", key, "type")
+		p = append(p, ' ')
+		p = dotquote.AppendString(p, fmt.Sprintf("%v", value), "ctx", key, "value")
+	}
+
+	_,_ = oi.LongWrite(router.writer, p)
+
+//@TODO: Should this be checking for errors from oi.LongWrite()?
+	return nil
+}
