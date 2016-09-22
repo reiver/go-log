@@ -21,6 +21,7 @@ func NewDefaultWritingRouterWithPrefix(writer io.Writer, prefix map[string]inter
 	var prefixBuffer []byte
 	if 0 < len(prefix) {
 		prefixBuffer = dotquote.AppendMap(prefixBuffer, prefix)
+		prefixBuffer = append(prefixBuffer, ' ')
 	}
 
 	router := DefaultWritingRouter{

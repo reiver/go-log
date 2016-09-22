@@ -147,11 +147,50 @@ func TestDefaultWritingRouterWithPrefixRoute(t *testing.T) {
 				"number": "123",
 			},
 			ExpectContains: []string{
-				`"name"="backendapi" "number"="123"`,
-				`"text"="Hello world!"`,
+				`"name"="backendapi" "number"="123" "text"="Hello world!" "when"="`,
 				` "ctx"."apple"="one" "ctx"."banana"="2" "ctx"."cherry"="3.300000" "ctx"."kiwi"="true"`,
 				` "error"."type"="*errors.errorString" "error"."text"="test error" `,
-				` "when"="`,
+			},
+		},
+
+
+		{
+			Message: "Apple\tBANANA\nCherry",
+			Context: map[string]interface{}{
+				"apple": "one",
+				"banana": 2,
+				"cherry": 3.3,
+				"kiwi":   true,
+				"~error": errors.New("test error"),
+				"more": map[string]interface{}{
+					"ONE":   "1",
+					"TWO":   "2",
+					"THREE": "3",
+					"FOUR":  map[string]interface{}{
+						"a": "1st",
+						"b": "2nd",
+						"c": []string{
+							"th",
+							"i",
+							"rd",
+						},
+					},
+				},
+			},
+			Prefix: map[string]interface{}{
+				"app": map[string]interface{}{
+					"name": "backendapi",
+					"build": map[string]interface{}{
+						"number": 123,
+						"hash":  "4a844b2",
+					},
+				},
+			},
+			ExpectContains: []string{
+				`"app"."build"."hash"="4a844b2" "app"."build"."number"="123" "app"."name"="backendapi" "text"="Apple\tBANANA\nCherry" "when"="`,
+				` "ctx"."apple"="one" "ctx"."banana"="2" "ctx"."cherry"="3.300000" "ctx"."kiwi"="true"`,
+				` "error"."type"="*errors.errorString" "error"."text"="test error" `,
+				` "ctx"."more"."FOUR"."a"="1st" "ctx"."more"."FOUR"."b"="2nd" "ctx"."more"."FOUR"."c"=["th","i","rd"] "ctx"."more"."ONE"="1" "ctx"."more"."THREE"="3" "ctx"."more"."TWO"="2"`,
 			},
 		},
 	}
