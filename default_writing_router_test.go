@@ -28,8 +28,67 @@ func TestDefaultWritingRouterRoute(t *testing.T) {
 			},
 			ExpectContains: []string{
 				`"text"="Hello world!"`,
-				` "ctx"."apple"."type"="string" "ctx"."apple"."value"="one" "ctx"."banana"."type"="int" "ctx"."banana"."value"="2" "ctx"."cherry"."type"="float64" "ctx"."cherry"."value"="3.3" "ctx"."kiwi"."type"="bool" "ctx"."kiwi"."value"="true"`,
+				` "ctx"."apple"="one" "ctx"."banana"="2" "ctx"."cherry"="3.300000" "ctx"."kiwi"="true"`,
 				` "error"."type"="*errors.errorString" "error"."text"="test error" `,
+				` "when"="`,
+			},
+		},
+
+
+
+		{
+			Message: "Apple\tBANANA\nCherry",
+			Context: map[string]interface{}{
+				"apple": "one",
+				"banana": 2,
+				"cherry": 3.3,
+				"kiwi":   true,
+				"~error": errors.New("test error"),
+				"more": map[string]interface{}{
+					"ONE":   "1",
+					"TWO":   "2",
+					"THREE": "3",
+				},
+			},
+			ExpectContains: []string{
+				`"text"="Apple\tBANANA\nCherry"`,
+				` "ctx"."apple"="one" "ctx"."banana"="2" "ctx"."cherry"="3.300000" "ctx"."kiwi"="true"`,
+				` "error"."type"="*errors.errorString" "error"."text"="test error" `,
+				` "ctx"."more"."ONE"="1" "ctx"."more"."THREE"="3" "ctx"."more"."TWO"="2"`,
+				` "when"="`,
+			},
+		},
+
+
+
+		{
+			Message: "Apple\tBANANA\nCherry",
+			Context: map[string]interface{}{
+				"apple": "one",
+				"banana": 2,
+				"cherry": 3.3,
+				"kiwi":   true,
+				"~error": errors.New("test error"),
+				"more": map[string]interface{}{
+					"ONE":   "1",
+					"TWO":   "2",
+					"THREE": "3",
+					"FOUR":  map[string]interface{}{
+						"a": "1st",
+						"b": "2nd",
+						"c": []string{
+							"th",
+							"i",
+							"rd",
+						},
+					},
+				},
+			},
+			ExpectContains: []string{
+				`"text"="Apple\tBANANA\nCherry"`,
+				` "ctx"."apple"="one" "ctx"."banana"="2" "ctx"."cherry"="3.300000" "ctx"."kiwi"="true"`,
+				` "error"."type"="*errors.errorString" "error"."text"="test error" `,
+				` "ctx"."more"."FOUR"."a"="1st" "ctx"."more"."FOUR"."b"="2nd" "ctx"."more"."FOUR"."c"=["th","i","rd"] "ctx"."more"."ONE"="1" "ctx"."more"."THREE"="3" "ctx"."more"."TWO"="2"`,
 				` "when"="`,
 			},
 		},
@@ -90,7 +149,7 @@ func TestDefaultWritingRouterWithPrefixRoute(t *testing.T) {
 			ExpectContains: []string{
 				`"name"="backendapi" "number"="123"`,
 				`"text"="Hello world!"`,
-				` "ctx"."apple"."type"="string" "ctx"."apple"."value"="one" "ctx"."banana"."type"="int" "ctx"."banana"."value"="2" "ctx"."cherry"."type"="float64" "ctx"."cherry"."value"="3.3" "ctx"."kiwi"."type"="bool" "ctx"."kiwi"."value"="true"`,
+				` "ctx"."apple"="one" "ctx"."banana"="2" "ctx"."cherry"="3.300000" "ctx"."kiwi"="true"`,
 				` "error"."type"="*errors.errorString" "error"."text"="test error" `,
 				` "when"="`,
 			},
