@@ -79,10 +79,6 @@ func (router *DefaultWritingRouter) Route(message string, context map[string]int
 		}
 	}
 
-
-//@TODO: This is a potential heavy operation. Is there a better way
-//       to get the ultimate result this is trying to archive?
-//
 	if 0 < len(context) {
 		p = append(p, ' ')
 		p = dotquote.AppendMap(p, context, "ctx")
