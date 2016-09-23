@@ -88,6 +88,7 @@ func (router *DefaultWritingRouter) Route(message string, context map[string]int
 		p = dotquote.AppendMap(p, context, "ctx")
 	}
 
+	p = append(p, '\n')
 
 	_,_ = oi.LongWrite(router.writer, p)
 
