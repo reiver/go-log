@@ -5,7 +5,7 @@ Basic Usage
 
 Basic usage of the flogger looks like this:
 
-	router := NewPrettyWritingRouter(os.Stdout)
+	router := flog.NewPrettyWritingRouter(os.Stdout)
 	
 	flogger := flog.New(router)
 
@@ -73,7 +73,7 @@ For example:
 	
 	switch deploymentEnvironment {
 	case "DEV":
-		router := NewPrettyWritingRouter(os.Stdout)
+		router := flog.NewPrettyWritingRouter(os.Stdout)
 		
 		flogger = flog.New(router)
 	case "PROD":
