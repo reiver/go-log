@@ -23,7 +23,7 @@ func TestFilteringRouterJustCreated(t *testing.T) {
 	}
 
 
-	message := fmt.Sprint("%x", randomness.Int63n(9999999999))
+	message := fmt.Sprintf("%x", randomness.Int63n(9999999999))
 
 	context := make(map[string]interface{})
 	limit := randomness.Int63n(30)
