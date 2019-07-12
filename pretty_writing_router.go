@@ -41,6 +41,7 @@ func (router *PrettyWritingRouter) Route(message string, context map[string]inte
 	const STYLE_MESSAGE   = "\x1b[44;37;1m" // BG BLUE,   FG WHITE,  BOLD
 	const STYLE_DEFAULT   = "\033[95m"      // HEADER
 	const STYLE_RESET     = "\033[0m"       // RESET
+	const STYLE_CALLTRACE = "\033[40;36;1m" // BG BLACK,  FG CYAN,   BOLD
 
 	str := ""
 
@@ -99,6 +100,14 @@ func (router *PrettyWritingRouter) Route(message string, context map[string]inte
 		}
 
 		str = fmt.Sprintf("%s\t%s%s%s=%s%#v%s", str, style, key, STYLE_RESET, style, value, STYLE_RESET)
+	}
+
+	if trace := calltrace(); nil != trace {
+		str = fmt.Sprintf("%s\t⟨⟨", str)
+		for _, s := range trace {
+			str = fmt.Sprintf("%s %s%s%s,", str, STYLE_CALLTRACE, s, STYLE_RESET)
+		}
+		str = fmt.Sprintf("%s ⟩⟩", str)
 	}
 
 	fmt.Fprintln(router.writer, str)

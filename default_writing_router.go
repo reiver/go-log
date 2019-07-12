@@ -63,6 +63,10 @@ func (router *DefaultWritingRouter) Route(message string, context map[string]int
 	p = dotquote.AppendString(p, message, "text")
 	p = append(p, ' ')
 	p = dotquote.AppendString(p, time.Now().String(), "when")
+	if trace := calltrace(); nil != trace {
+		p = append(p, ' ')
+		p = dotquote.AppendStrings(p, trace, "calltrace")
+	}
 
 	// If we have an error, then get the error.Error() into the log too.
 	if errorFieldValue, ok := context["~error"]; ok {
