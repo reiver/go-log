@@ -1,13 +1,11 @@
 package flog
 
-
 import (
 	"fmt"
 	"io"
 	"sort"
 	"time"
 )
-
 
 // PrettyWritingRouter returns an initialized PrettyWritingRouter
 func NewPrettyWritingRouter(writer io.Writer) *PrettyWritingRouter {
@@ -17,8 +15,6 @@ func NewPrettyWritingRouter(writer io.Writer) *PrettyWritingRouter {
 
 	return &router
 }
-
-
 
 // PrettyWritingRouter is a router that writes a pretty version of
 // the log it was give (including COLORS!) to the writer it was
@@ -30,8 +26,6 @@ func NewPrettyWritingRouter(writer io.Writer) *PrettyWritingRouter {
 type PrettyWritingRouter struct {
 	writer io.Writer
 }
-
-
 
 func (router *PrettyWritingRouter) Route(message string, context map[string]interface{}) error {
 	if nil == router {
