@@ -1,6 +1,5 @@
 package flog
 
-
 import (
 	"github.com/reiver/go-dotquote"
 	"github.com/reiver/go-oi"
@@ -9,7 +8,6 @@ import (
 	"io"
 	"time"
 )
-
 
 // NewDefaultWritingRouter returns an initialized DefaultWritingRouter
 func NewDefaultWritingRouter(writer io.Writer) *DefaultWritingRouter {
@@ -32,7 +30,6 @@ func NewDefaultWritingRouterWithPrefix(writer io.Writer, prefix map[string]inter
 	return &router
 }
 
-
 // DefaultWritingRouter is a router that writes the log in a default format.
 //
 // A DefaultWritingRouter is appropriate for a production (i.e., "PROD")
@@ -41,8 +38,6 @@ type DefaultWritingRouter struct {
 	writer io.Writer
 	prefix []byte
 }
-
-
 
 func (router *DefaultWritingRouter) Route(message string, context map[string]interface{}) error {
 	if nil == router {
