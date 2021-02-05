@@ -10,14 +10,14 @@ type internalLogger struct {
 
 	writer io.Writer
 
-	canNotLogDebug      bool
-	canNotLogError      bool
-	canNotLogFatal      bool
-	canNotLogHighlight  bool
-	canNotLogInform     bool
-	canNotLogPanic      bool
-	canNotLogTrace      bool
-	canNotLogWarn       bool
+	mutedDebug      bool
+	mutedError      bool
+	mutedFatal      bool
+	mutedHighlight  bool
+	mutedInform     bool
+	mutedPanic      bool
+	mutedTrace      bool
+	mutedWarn       bool
 }
 
 func NewLogger(writer io.Writer, parameters ...string) Logger {
@@ -34,5 +34,5 @@ func NewLogger(writer io.Writer, parameters ...string) Logger {
 		}
 	}
 
-	return logger
+	return &logger
 }

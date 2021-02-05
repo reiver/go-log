@@ -7,7 +7,7 @@ import (
 )
 
 func (receiver internalLogger) CanLogInform() bool {
-	return !receiver.canNotLogInform
+	return !receiver.mutedInform
 }
 
 func (receiver internalLogger) Inform(a ...interface{}) {

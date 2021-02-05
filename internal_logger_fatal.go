@@ -8,7 +8,7 @@ import (
 )
 
 func (receiver internalLogger) CanLogFatal() bool {
-	return !receiver.canNotLogFatal
+	return !receiver.mutedFatal
 }
 
 func (receiver internalLogger) Fatal(a ...interface{}) {

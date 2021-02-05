@@ -7,7 +7,7 @@ import (
 )
 
 func (receiver internalLogger) CanLogWarn() bool {
-	return !receiver.canNotLogWarn
+	return !receiver.mutedWarn
 }
 
 func (receiver internalLogger) Warn(a ...interface{}) {

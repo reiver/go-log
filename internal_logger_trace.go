@@ -7,7 +7,7 @@ import (
 )
 
 func (receiver internalLogger) CanLogTrace() bool {
-	return !receiver.canNotLogTrace
+	return !receiver.mutedTrace
 }
 
 func (receiver internalLogger) Trace(a ...interface{}) {

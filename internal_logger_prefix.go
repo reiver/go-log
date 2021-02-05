@@ -19,5 +19,5 @@ func (receiver internalLogger) Prefix(newprefix ...string) Logger {
 	var logger internalLogger = receiver
 	logger.prefix += prefix
 
-	return logger
+	return &logger
 }

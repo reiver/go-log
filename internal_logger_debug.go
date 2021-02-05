@@ -7,7 +7,7 @@ import (
 )
 
 func (receiver internalLogger) CanLogDebug() bool {
-	return !receiver.canNotLogDebug
+	return !receiver.mutedDebug
 }
 
 func (receiver internalLogger) Debug(a ...interface{}) {

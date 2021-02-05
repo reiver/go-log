@@ -7,7 +7,7 @@ import (
 )
 
 func (receiver internalLogger) CanLogError() bool {
-	return !receiver.canNotLogError
+	return !receiver.mutedError
 }
 
 func (receiver internalLogger) Error(a ...interface{}) error {

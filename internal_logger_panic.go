@@ -7,7 +7,7 @@ import (
 )
 
 func (receiver internalLogger) CanLogPanic() bool {
-	return !receiver.canNotLogPanic
+	return !receiver.mutedPanic
 }
 
 func (receiver internalLogger) Panic(a ...interface{}) {

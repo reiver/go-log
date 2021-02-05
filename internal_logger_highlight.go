@@ -7,7 +7,7 @@ import (
 )
 
 func (receiver internalLogger) CanLogHighlight() bool {
-	return !receiver.canNotLogHighlight
+	return !receiver.mutedHighlight
 }
 
 func (receiver internalLogger) Highlight(a ...interface{}) {
