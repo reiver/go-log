@@ -6,12 +6,12 @@ import (
 	"strings"
 )
 
-func (receiver internalLogger) CanLogTrace() bool {
-	return !receiver.mutedTrace
+func (receiver internalLogger) TraceMuted() bool {
+	return receiver.mutedTrace
 }
 
 func (receiver internalLogger) Trace(a ...interface{}) {
-	if !receiver.CanLogTrace() {
+	if receiver.TraceMuted() {
 		return
 	}
 	if nil == receiver.writer {
@@ -24,7 +24,7 @@ func (receiver internalLogger) Trace(a ...interface{}) {
 }
 
 func (receiver internalLogger) Tracef(format string, a ...interface{}) {
-	if !receiver.CanLogTrace() {
+	if receiver.TraceMuted() {
 		return
 	}
 

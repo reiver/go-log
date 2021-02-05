@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-func (receiver internalLogger) CanLogPanic() bool {
-	return !receiver.mutedPanic
+func (receiver internalLogger) PanicMuted() bool {
+	return receiver.mutedPanic
 }
 
 func (receiver internalLogger) Panic(a ...interface{}) {
@@ -19,7 +19,7 @@ func (receiver internalLogger) Panic(a ...interface{}) {
 func (receiver internalLogger) Panicf(format string, a ...interface{}) {
 	err := fmt.Errorf(format, a...)
 
-	if !receiver.CanLogPanic() {
+	if receiver.PanicMuted() {
 		panic(err)
 	}
 

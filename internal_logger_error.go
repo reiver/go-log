@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-func (receiver internalLogger) CanLogError() bool {
-	return !receiver.mutedError
+func (receiver internalLogger) ErrorMuted() bool {
+	return receiver.mutedError
 }
 
 func (receiver internalLogger) Error(a ...interface{}) error {
@@ -19,7 +19,7 @@ func (receiver internalLogger) Error(a ...interface{}) error {
 func (receiver internalLogger) Errorf(format string, a ...interface{}) error {
 	err := fmt.Errorf(format, a...)
 
-	if !receiver.CanLogError() {
+	if receiver.ErrorMuted() {
 		return err
 	}
 

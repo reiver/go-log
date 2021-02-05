@@ -1,45 +1,45 @@
 package flog
 
 type Logger interface {
-	CanLogDebug() bool
 	Debug(...interface{})
 	Debugf(string, ...interface{})
 	MuteDebug()
+	DebugMuted() bool
 
-	CanLogError() bool
 	Error(...interface{}) error
 	Errorf(string, ...interface{}) error
 	MuteError()
+	ErrorMuted() bool
 
-	CanLogFatal() bool
 	Fatal(...interface{})
 	Fatalf(string, ...interface{})
 	MuteFatal()
+	FatalMuted() bool
 
-	CanLogHighlight() bool
 	Highlight(...interface{})
 	Highlightf(string, ...interface{})
 	MuteHighlight()
+	HighlightMuted() bool
 
-	CanLogInform() bool
 	Inform(...interface{})
 	Informf(string, ...interface{})
 	MuteInform()
+	InformMuted() bool
 
-	CanLogPanic() bool
 	Panic(...interface{})
 	Panicf(string, ...interface{})
 	MutePanic()
+	PanicMuted() bool
 
-	CanLogTrace() bool
 	Trace(...interface{})
 	Tracef(string, ...interface{})
 	MuteTrace()
+	TraceMuted() bool
 
-	CanLogWarn() bool
 	Warn(...interface{})
 	Warnf(string, ...interface{})
 	MuteWarn()
+	WarnMuted() bool
 
 	Prefix(...string) Logger
 }

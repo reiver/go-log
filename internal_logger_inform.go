@@ -6,12 +6,12 @@ import (
 	"strings"
 )
 
-func (receiver internalLogger) CanLogInform() bool {
-	return !receiver.mutedInform
+func (receiver internalLogger) InformMuted() bool {
+	return receiver.mutedInform
 }
 
 func (receiver internalLogger) Inform(a ...interface{}) {
-	if !receiver.CanLogInform() {
+	if receiver.InformMuted() {
 		return
 	}
 	if nil == receiver.writer {
@@ -24,7 +24,7 @@ func (receiver internalLogger) Inform(a ...interface{}) {
 }
 
 func (receiver internalLogger) Informf(format string, a ...interface{}) {
-	if !receiver.CanLogInform() {
+	if receiver.InformMuted() {
 		return
 	}
 

@@ -6,12 +6,12 @@ import (
 	"strings"
 )
 
-func (receiver internalLogger) CanLogWarn() bool {
-	return !receiver.mutedWarn
+func (receiver internalLogger) WarnMuted() bool {
+	return receiver.mutedWarn
 }
 
 func (receiver internalLogger) Warn(a ...interface{}) {
-	if !receiver.CanLogWarn() {
+	if receiver.WarnMuted() {
 		return
 	}
 	if nil == receiver.writer {
@@ -24,7 +24,7 @@ func (receiver internalLogger) Warn(a ...interface{}) {
 }
 
 func (receiver internalLogger) Warnf(format string, a ...interface{}) {
-	if !receiver.CanLogWarn() {
+	if receiver.WarnMuted() {
 		return
 	}
 

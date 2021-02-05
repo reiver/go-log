@@ -6,12 +6,12 @@ import (
 	"strings"
 )
 
-func (receiver internalLogger) CanLogHighlight() bool {
-	return !receiver.mutedHighlight
+func (receiver internalLogger) HighlightMuted() bool {
+	return receiver.mutedHighlight
 }
 
 func (receiver internalLogger) Highlight(a ...interface{}) {
-	if !receiver.CanLogHighlight() {
+	if receiver.HighlightMuted() {
 		return
 	}
 	if nil == receiver.writer {
@@ -24,7 +24,7 @@ func (receiver internalLogger) Highlight(a ...interface{}) {
 }
 
 func (receiver internalLogger) Highlightf(format string, a ...interface{}) {
-	if !receiver.CanLogHighlight() {
+	if receiver.HighlightMuted() {
 		return
 	}
 

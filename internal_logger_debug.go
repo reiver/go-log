@@ -6,12 +6,12 @@ import (
 	"strings"
 )
 
-func (receiver internalLogger) CanLogDebug() bool {
-	return !receiver.mutedDebug
+func (receiver internalLogger) DebugMuted() bool {
+	return receiver.mutedDebug
 }
 
 func (receiver internalLogger) Debug(a ...interface{}) {
-	if !receiver.CanLogDebug() {
+	if receiver.DebugMuted() {
 		return
 	}
 	if nil == receiver.writer {
@@ -24,7 +24,7 @@ func (receiver internalLogger) Debug(a ...interface{}) {
 }
 
 func (receiver internalLogger) Debugf(format string, a ...interface{}) {
-	if !receiver.CanLogDebug() {
+	if receiver.DebugMuted() {
 		return
 	}
 

@@ -7,8 +7,8 @@ import (
 	"strings"
 )
 
-func (receiver internalLogger) CanLogFatal() bool {
-	return !receiver.mutedFatal
+func (receiver internalLogger) FatalMuted() bool {
+	return receiver.mutedFatal
 }
 
 func (receiver internalLogger) Fatal(a ...interface{}) {
@@ -18,7 +18,7 @@ func (receiver internalLogger) Fatal(a ...interface{}) {
 }
 
 func (receiver internalLogger) Fatalf(format string, a ...interface{}) {
-	if !receiver.CanLogFatal() {
+	if receiver.FatalMuted() {
 		os.Exit(1)
 		return
 	}
