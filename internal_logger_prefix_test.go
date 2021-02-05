@@ -101,14 +101,20 @@ func TestLoggerPrefix_inform(t *testing.T) {
 	log.Debug("hello DEBUG")
 	log.Trace("hello TRACE")
 
-	const expected = "[PANIC] one: two: three: hello PANIC"       + "\n" +
-	                  "RECOVER:hello PANIC"       + "\n" +
-	                "[inform] one: two: three: hello INFORM"       + "\n" +
-	                "[HIGHLIGHT] one: two: three: hello HIGHLIGHT" + "\n" +
-	                "[ERROR] one: two: three: hello ERROR"         + "\n" +
-	                "[warn] one: two: three: hello WARN"           + "\n" +
-	                "[debug] one: two: three: hello DEBUG"         + "\n" +
-	                "[trace] one: two: three: hello TRACE"         + "\n"
+
+	log = log.Prefix("four")
+	log.Highlight("new prefix FOUR")
+
+
+	const expected = "[PANIC] one: two: three: hello PANIC"              + "\n" +
+	                                  "RECOVER:hello PANIC"              + "\n" +
+	                "[inform] one: two: three: hello INFORM"             + "\n" +
+	                "[HIGHLIGHT] one: two: three: hello HIGHLIGHT"       + "\n" +
+	                "[ERROR] one: two: three: hello ERROR"               + "\n" +
+	                "[warn] one: two: three: hello WARN"                 + "\n" +
+	                "[debug] one: two: three: hello DEBUG"               + "\n" +
+	                "[trace] one: two: three: hello TRACE"               + "\n" +
+	                "[HIGHLIGHT] one: two: three: four: new prefix FOUR" + "\n"
 
 	if actual := buffer.String(); expected != actual {
 		t.Error("The actual logs is not what was expected.")

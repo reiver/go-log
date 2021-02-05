@@ -17,7 +17,7 @@ func (receiver internalLogger) Prefix(newprefix ...string) Logger {
 	prefix := buffer.String()
 
 	var logger internalLogger = receiver
-	logger.prefix += prefix
+	logger.prefix = prefix
 
 	return &logger
 }
