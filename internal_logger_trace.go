@@ -45,6 +45,7 @@ func (receiver internalLogger) Tracef(format string, a ...interface{}) {
 			buffer.WriteString("[trace] ")
 		}
 
+		buffer.WriteString(receiver.prefix)
 		buffer.WriteString(format)
 
 		switch receiver.style {

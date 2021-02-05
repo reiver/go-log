@@ -40,6 +40,7 @@ func (receiver internalLogger) Errorf(format string, a ...interface{}) error {
 			buffer.WriteString("[ERROR] ")
 		}
 
+		buffer.WriteString(receiver.prefix)
 		buffer.WriteString(format)
 
 		switch receiver.style {

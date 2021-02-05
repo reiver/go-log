@@ -45,6 +45,7 @@ func (receiver internalLogger) Highlightf(format string, a ...interface{}) {
 			buffer.WriteString("[HIGHLIGHT] ")
 		}
 
+		buffer.WriteString(receiver.prefix)
 		buffer.WriteString(format)
 
 		switch receiver.style {

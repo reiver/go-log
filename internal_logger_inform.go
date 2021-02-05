@@ -45,6 +45,7 @@ func (receiver internalLogger) Informf(format string, a ...interface{}) {
 			buffer.WriteString("[inform] ")
 		}
 
+		buffer.WriteString(receiver.prefix)
 		buffer.WriteString(format)
 
 		switch receiver.style {

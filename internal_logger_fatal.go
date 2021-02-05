@@ -41,6 +41,7 @@ func (receiver internalLogger) Fatalf(format string, a ...interface{}) {
 			buffer.WriteString("[PANIC] ")
 		}
 
+		buffer.WriteString(receiver.prefix)
 		buffer.WriteString(format)
 
 		switch receiver.style {
