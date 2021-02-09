@@ -1,6 +1,12 @@
 package flog
 
 type Logger interface {
+	Alert(...interface{}) error
+	Alertf(string, ...interface{}) error
+	MuteAlert()
+	UnmuteAlert()
+	AlertMuted() bool
+
 	Debug(...interface{})
 	Debugf(string, ...interface{})
 	MuteDebug()
