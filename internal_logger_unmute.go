@@ -1,5 +1,9 @@
 package flog
 
+func (receiver *internalLogger) UnmuteAlert() {
+	receiver.mutedAlert = false
+}
+
 func (receiver *internalLogger) UnmuteDebug() {
 	receiver.mutedDebug = false
 }

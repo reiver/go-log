@@ -10,6 +10,7 @@ type internalLogger struct {
 
 	writer io.Writer
 
+	mutedAlert      bool
 	mutedDebug      bool
 	mutedError      bool
 	mutedFatal      bool
