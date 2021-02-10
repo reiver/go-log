@@ -10,7 +10,7 @@ func (receiver internalLogger) End(a ...interface{}) {
 
 	msg := fmt.Sprintf(" δt=%s", diff)
 
-	a = append([]interface{}{"END"}, a...)
+	a = append([]interface{}{"END "}, a...)
 	a = append(a, msg)
 
 	receiver.Debug(a...)

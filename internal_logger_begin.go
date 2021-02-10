@@ -22,7 +22,7 @@ func (receiver internalLogger) Begin(a ...interface{}) Logger {
 		casted.begin = time.Now()
 	}
 
-	a = append([]interface{}{"BEGIN"}, a...)
+	a = append([]interface{}{"BEGIN "}, a...)
 
 	logger.Debug(a...)
 
