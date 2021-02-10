@@ -2,6 +2,7 @@ package flog
 
 import (
 	"runtime"
+	"time"
 )
 
 func (receiver internalLogger) Begin(a ...interface{}) Logger {
@@ -16,6 +17,10 @@ func (receiver internalLogger) Begin(a ...interface{}) Logger {
 	}
 
 	logger := receiver.Prefix(funcName)
+	switch casted := logger.(type) {
+	case *internalLogger:
+		casted.begin = time.Now()
+	}
 
 	a = append([]interface{}{"BEGIN"}, a...)
 

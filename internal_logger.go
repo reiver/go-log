@@ -2,11 +2,14 @@ package flog
 
 import (
 	"io"
+	"time"
 )
 
 type internalLogger struct {
 	prefix string
 	style  string
+
+	begin time.Time
 
 	writer io.Writer
 
