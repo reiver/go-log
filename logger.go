@@ -7,11 +7,15 @@ type Logger interface {
 	UnmuteAlert()
 	AlertMuted() bool
 
+	Begin(...interface{}) Logger
+
 	Debug(...interface{})
 	Debugf(string, ...interface{})
 	MuteDebug()
 	UnmuteDebug()
 	DebugMuted() bool
+
+	End(...interface{})
 
 	Error(...interface{}) error
 	Errorf(string, ...interface{}) error
