@@ -1,4 +1,4 @@
-package flog
+package log
 
 
 // NewMappingRouter returns an initialized MappingRouter.

@@ -1,4 +1,4 @@
-package flog
+package log
 
 type Logger interface {
 	Alert(...interface{}) error

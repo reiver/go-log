@@ -1,4 +1,4 @@
-package flog
+package log
 
 
 func (flogger *internalFlogger)  With(cascade ...interface{}) Flogger {

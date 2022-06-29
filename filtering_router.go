@@ -1,4 +1,4 @@
-package flog
+package log
 
 
 // NewFilteringRouter returns an initialized FilteringRouter.

@@ -1,4 +1,4 @@
-package flog
+package log
 
 
 // NewNonBlockingRouter returns an initialized NonBlockingRouter.

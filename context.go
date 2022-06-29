@@ -1,4 +1,4 @@
-package flog
+package log
 
 
 func newContext(cascade ...interface{}) map[string]interface{} {

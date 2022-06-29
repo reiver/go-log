@@ -1,4 +1,4 @@
-package flog
+package log
 
 
 // NewCopyingRouter returns an initialized CopyingRouter.

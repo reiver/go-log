@@ -1,4 +1,4 @@
-package flog
+package log
 
 func (receiver *internalLogger) MuteAlert() {
 	receiver.mutedDebug = true

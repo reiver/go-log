@@ -101,4 +101,4 @@ Makes it so log messages get posted to a Slack channel.
 https://github.com/reiver/go-slackchannelrouter
 
 */
-package flog
+package log
