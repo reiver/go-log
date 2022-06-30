@@ -66,7 +66,7 @@ func TestLoggerPrefix(t *testing.T) {
 
 		newInternalLogger, casted := newLogger.(*internalLogger)
 		if !casted {
-			t.Errorf("For test #%d, could not cast to flog.internalLogger.", testNumber)
+			t.Errorf("For test #%d, could not cast to log.internalLogger.", testNumber)
 			t.Logf("TYPE: %T", newLogger)
 			continue
 		}
