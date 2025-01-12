@@ -24,7 +24,7 @@ type internalLogger struct {
 	mutedWarn       bool
 }
 
-func NewLogger(writer io.Writer, parameters ...string) Logger {
+func NewLogger(writer io.Writer, parameters ...string) MutableLogger {
 	logger := internalLogger{
 		writer:writer,
 	}
