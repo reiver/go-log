@@ -2,10 +2,10 @@ package log
 
 
 import (
-	"errors"
+	"github.com/reiver/go-erorr"
 )
 
 
-var (
-	errNilReceiver = errors.New("Nil Receiver")
+const (
+	errNilReceiver = erorr.Error("Nil Receiver")
 )
