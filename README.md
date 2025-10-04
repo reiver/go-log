@@ -113,3 +113,23 @@ case "PROD":
 	logger = log.New(router)
 }
 ```
+
+## Import
+
+To import package **log** use `import` code like the following:
+
+```
+import "codeberg.org/reiver/go-log"
+```
+
+## Installation
+
+To install package **log** do the following:
+
+```
+GOPROXY=direct go get codeberg.org/reiver/go-log
+```
+
+## Author
+
+Package **log** was written by [Charles Iliya Krempeaux](http://reiver.link)
