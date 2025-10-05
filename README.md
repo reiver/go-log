@@ -6,9 +6,9 @@ A library that provides structured and formatted logging for the Go programming 
 
 ## Online Documention
 
-Online documentation, which includes examples, can be found at: http://godoc.org/github.com/reiver/go-log
+Online documentation, which includes examples, can be found at: http://godoc.org/codeberg.org/reiver/go-log
 
-[![GoDoc](https://godoc.org/github.com/reiver/go-log?status.svg)](https://godoc.org/github.com/reiver/go-log)
+[![GoDoc](https://godoc.org/codeberg.org/reiver/go-log?status.svg)](https://godoc.org/codeberg.org/reiver/go-log)
 
 ## Basic Usage
 
