@@ -1,4 +1,4 @@
-module github.com/reiver/go-log
+module codeberg.org/reiver/go-log
 
 go 1.23
 
